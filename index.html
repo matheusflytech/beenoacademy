@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beeno Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',Arial,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+
+nav{background:#000;border-bottom:1px solid #1a1a1a;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo img{height:26px;display:block}
+.nav-badge{background:#42CD88;color:#000;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a{color:#555;text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:#42CD88}
+
+.hero{background:linear-gradient(135deg,#0a0a0a 60%,#0d1f0d 100%);border-bottom:1px solid #1a1a1a;padding:40px 32px 36px;position:relative;overflow:hidden}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#42CD88;margin-bottom:10px}
+.hero h1{font-size:30px;font-weight:800;letter-spacing:-0.5px;line-height:1.2;margin-bottom:10px}
+.hero p{font-size:15px;color:#555;max-width:500px;line-height:1.65}
+.stats{display:flex;gap:32px;margin-top:22px}
+.stat-num{font-size:20px;font-weight:800;color:#42CD88;display:block}
+.stat-label{font-size:12px;color:#444;display:block}
+
+.main{display:grid;grid-template-columns:290px 1fr;flex:1;max-width:1100px;margin:0 auto;width:100%;padding:32px;gap:28px;align-items:start}
+
+.sidebar{position:sticky;top:80px}
+.progress-bar{background:#1a1a1a;border-radius:99px;height:3px;margin-bottom:4px}
+.progress-fill{background:#42CD88;height:3px;border-radius:99px;transition:width .4s ease}
+.progress-label{font-size:11px;color:#444;margin-bottom:20px;display:block}
+.sidebar-cat{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2a2a2a;padding:14px 10px 6px}
+
+.lesson{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:2px}
+.lesson:hover{background:#141414}
+.lesson.active{background:#0d1f0d;border-color:#1a3a1a}
+.home-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:8px}
+.home-item:hover{background:#141414}
+.home-item.active{background:#0d1f0d;border-color:#1a3a1a}
+.home-icon{width:26px;height:26px;border-radius:6px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.home-item.active .home-icon{background:#42CD88;color:#000}
+.lesson-num{width:26px;height:26px;border-radius:6px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#444;flex-shrink:0;transition:all .2s}
+.lesson.active .lesson-num{background:#42CD88;color:#000}
+.lesson.done .lesson-num{background:#0d2e1a;color:#42CD88}
+.lesson-title{font-size:13px;font-weight:600;color:#777;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lesson.active .lesson-title,.home-item.active .lesson-title{color:#fff}
+.home-item .lesson-title{color:#777}
+.lesson-dur{font-size:11px;color:#333}
+.lesson-meta{flex:1;min-width:0}
+
+/* HOME PAGE */
+.home-area{min-width:0}
+.home-welcome{margin-bottom:32px}
+.home-welcome h2{font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.3px;margin-bottom:8px}
+.home-welcome p{font-size:14px;color:#555;line-height:1.75;max-width:560px}
+
+.home-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:32px}
+.home-card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:20px;cursor:pointer;transition:border-color .2s}
+.home-card:hover{border-color:#2a3a2a}
+.home-card-cat{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#42CD88;margin-bottom:10px}
+.home-card-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.35}
+.home-card-desc{font-size:12px;color:#555;line-height:1.6;margin-bottom:14px}
+.home-card-footer{display:flex;align-items:center;justify-content:space-between}
+.home-card-dur{font-size:11px;color:#333}
+.home-card-btn{font-size:11px;font-weight:700;color:#42CD88;background:none;border:none;cursor:pointer;padding:0;font-family:inherit}
+
+.home-divider{height:1px;background:#1a1a1a;margin-bottom:24px}
+.home-section-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2a2a2a;margin-bottom:16px}
+
+.begin-btn{display:inline-flex;align-items:center;gap:8px;background:#42CD88;color:#000;font-size:13px;font-weight:700;padding:12px 24px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:background .2s}
+.begin-btn:hover{background:#38b87a}
+
+/* PLAYER */
+.player-area{min-width:0;display:none}
+.video-wrap{background:#000;border-radius:14px;overflow:hidden;border:1px solid #1a1a1a;aspect-ratio:16/9;position:relative}
+.video-wrap video{width:100%;height:100%;display:block}
+.video-info{margin-top:22px}
+.v-cat{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#42CD88;margin-bottom:8px}
+.v-title{font-size:22px;font-weight:800;letter-spacing:-0.3px;line-height:1.2;margin-bottom:12px}
+.v-desc{font-size:14px;color:#555;line-height:1.75;max-width:640px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{background:#111;border:1px solid #1e1e1e;border-radius:6px;padding:4px 12px;font-size:12px;color:#444}
+.nav-btns{display:flex;gap:12px;margin-top:24px;padding-top:24px;border-top:1px solid #1a1a1a}
+.btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #1e1e1e;background:transparent;color:#555;transition:all .2s;font-family:inherit}
+.btn:hover{border-color:#444;color:#fff}
+.btn-green{background:#42CD88;color:#000;border-color:#42CD88;font-weight:700}
+.btn-green:hover{background:#38b87a}
+
+footer{border-top:1px solid #1a1a1a;padding:20px 32px;text-align:center;margin-top:auto}
+footer p{font-size:12px;color:#2a2a2a}
+footer span{color:#42CD88;font-weight:700}
+
+@media(max-width:768px){
+  .main{grid-template-columns:1fr;padding:16px}
+  .sidebar{position:static}
+  .hero{padding:28px 16px}
+  nav{padding:0 16px}
+  .home-cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" style="display:flex;align-items:baseline;gap:8px"><span style="font-size:20px;font-weight:800;color:#42CD88;letter-spacing:-0.5px">beeno</span><span style="font-size:20px;font-weight:800;color:#ffffff;letter-spacing:-0.5px">Academy</span></div>
+  <div class="nav-links">
+    <a href="https://help.beeno.ai" target="_blank">Help Center</a>
+    <a href="https://app.beeno.ai" target="_blank">Plataforma</a>
+    <span class="nav-badge">Academy</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.45;pointer-events:none"></canvas>
+  <div class="hero-inner">
+    <p class="eyebrow">Beeno Academy</p>
+    <h1>Aprenda a usar o Beeno<br>do jeito certo.</h1>
+    <p>Aulas curtas e diretas sobre cada funcionalidade do CRM. No seu ritmo, quando precisar.</p>
+    <div class="stats">
+      <div><span class="stat-num">2</span><span class="stat-label">aulas disponíveis</span></div>
+      <div><span class="stat-num">2</span><span class="stat-label">categorias</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <aside class="sidebar">
+    <div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
+    <span class="progress-label" id="pLabel">0 de 2 aulas assistidas</span>
+
+    <div class="home-item active" id="home-btn" onclick="showHome()">
+      <div class="home-icon" id="home-icon" style="display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;color:#444"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+      <div class="lesson-meta">
+        <p class="lesson-title">Início</p>
+      </div>
+    </div>
+
+    <div style="height:1px;background:#1a1a1a;margin:8px 0 4px"></div>
+
+    <p class="sidebar-cat">Marketing</p>
+    <div class="lesson" id="l0" onclick="load(0)">
+      <div class="lesson-num" id="n0">1</div>
+      <div class="lesson-meta">
+        <p class="lesson-title">Formulário + Landing Page</p>
+        <p class="lesson-dur">10 min</p>
+      </div>
+    </div>
+
+    <p class="sidebar-cat">Configurações</p>
+    <div class="lesson" id="l1" onclick="load(1)">
+      <div class="lesson-num" id="n1">2</div>
+      <div class="lesson-meta">
+        <p class="lesson-title">Conexão de Domínio</p>
+        <p class="lesson-dur">5 min</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- HOME -->
+  <main class="home-area" id="homeArea">
+    <div class="home-welcome">
+      <h2>Bem-vindo à Beeno Academy</h2>
+      <p>Aqui você encontra aulas curtas e objetivas ensinando cada funcionalidade do Beeno CRM. Escolha uma aula para começar ou explore as categorias abaixo.</p>
+    </div>
+
+    <div class="home-cards">
+      <div class="home-card" onclick="load(0)">
+        <p class="home-card-cat">Marketing</p>
+        <p class="home-card-title">Como criar um formulário e integrar com uma Landing Page</p>
+        <p class="home-card-desc">Crie um formulário de captação, personalize os campos e conecte diretamente a uma LP. Os leads chegam automaticamente no CRM.</p>
+        <div class="home-card-footer">
+          <button class="home-card-btn">Assistir →</button>
+        </div>
+      </div>
+
+      <div class="home-card" onclick="load(1)">
+        <p class="home-card-cat">Configurações</p>
+        <p class="home-card-title">Conexão de domínio de página no Beeno</p>
+        <p class="home-card-desc">Conecte um domínio próprio às suas Landing Pages. Passo a passo da configuração de DNS e validação dentro da plataforma.</p>
+        <div class="home-card-footer">
+          <button class="home-card-btn">Assistir →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-divider"></div>
+    <p class="home-section-title">Por onde começar?</p>
+    <button class="begin-btn" onclick="load(0)">
+      ▶ &nbsp;Começar primeira aula
+    </button>
+  </main>
+
+  <!-- PLAYER -->
+  <main class="player-area" id="playerArea">
+    <div class="video-wrap">
+      <iframe id="player"
+        src="https://drive.google.com/file/d/1-Kv9sTjytaRrMu0tnAMfYtTL-8JkXxq3/preview"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+        style="width:100%;height:100%;border:0;display:block">
+      </iframe>
+    </div>
+    <div class="video-info">
+      <p class="v-cat" id="vCat">Marketing</p>
+      <h2 class="v-title" id="vTitle">Como criar um formulário e integrar com uma Landing Page</h2>
+      <p class="v-desc" id="vDesc">Aprenda a criar um formulário de captação no Beeno, personalizar os campos e integrá-lo diretamente a uma Landing Page.</p>
+      <div class="tags" id="vTags">
+        <span class="tag">Formulários</span>
+        <span class="tag">Landing Pages</span>
+        <span class="tag">Marketing</span>
+      </div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn" onclick="prev()">← Anterior</button>
+      <button class="btn btn-green" onclick="next()">Próxima aula →</button>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <p><span>beeno</span> <span style="color:#ffffff;font-weight:600">Academy</span> &nbsp;·&nbsp; by Skeps &nbsp;·&nbsp; <a href="https://help.beeno.ai" style="color:#2a2a2a;text-decoration:none">help.beeno.ai</a></p>
+</footer>
+
+<script>
+const lessons=[
+  {src:'https://drive.google.com/file/d/1-Kv9sTjytaRrMu0tnAMfYtTL-8JkXxq3/preview',cat:'Marketing',title:'Como criar um formulário e integrar com uma Landing Page',desc:'Aprenda a criar um formulário de captação no Beeno, personalizar os campos e integrá-lo diretamente a uma Landing Page. Veja como os leads chegam automaticamente no CRM.',tags:['Formulários','Landing Pages','Captação de Leads','Marketing']},
+  {src:'https://drive.google.com/file/d/1SNCj3YOu6tsGxWF-1M_KKV3YZ6QkaF2G/preview',cat:'Configurações',title:'Conexão de domínio de página no Beeno',desc:'Veja como conectar um domínio próprio às suas Landing Pages no Beeno. Passo a passo da configuração de DNS e validação dentro da plataforma.',tags:['Domínios','DNS','Landing Pages','Configurações']}
+];
+let cur=0;
+const watched=new Set();
+
+function showHome(){
+  document.getElementById('homeArea').style.display='block';
+  document.getElementById('playerArea').style.display='none';
+  document.getElementById('home-btn').className='home-item active';
+  document.querySelectorAll('.lesson').forEach(el=>el.classList.remove('active'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function load(i){
+  cur=i;
+  const l=lessons[i];
+  const v=document.getElementById('player');
+  v.src=l.src;v.load();v.play();
+  document.getElementById('vCat').textContent=l.cat;
+  document.getElementById('vTitle').textContent=l.title;
+  document.getElementById('vDesc').textContent=l.desc;
+  document.getElementById('vTags').innerHTML=l.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+  document.getElementById('homeArea').style.display='none';
+  document.getElementById('playerArea').style.display='block';
+  document.getElementById('home-btn').className='home-item';
+  for(let j=0;j<lessons.length;j++){
+    document.getElementById('l'+j).className='lesson'+(j===i?' active':'');
+    if(watched.has(j))document.getElementById('n'+j).textContent='✓';
+  }
+  watched.add(i);upd();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function next(){watched.add(cur);upd();document.getElementById('n'+cur).textContent='✓';document.getElementById('l'+cur).classList.add('done');if(cur<lessons.length-1)load(cur+1);}
+function prev(){if(cur>0)load(cur-1);else showHome();}
+function upd(){
+  const p=(watched.size/lessons.length)*100;
+  document.getElementById('pFill').style.width=p+'%';
+  document.getElementById('pLabel').textContent=watched.size+' de '+lessons.length+' aulas assistidas';
+}
+// iframe: mark done via navigation
+
+
+// Hero canvas wave animation
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  const waves = [
+    { amp: 18, freq: 0.012, speed: 0.018, y: 0.25, opacity: 0.18, width: 1.2 },
+    { amp: 26, freq: 0.009, speed: 0.013, y: 0.42, opacity: 0.13, width: 1.0 },
+    { amp: 14, freq: 0.016, speed: 0.022, y: 0.58, opacity: 0.20, width: 0.8 },
+    { amp: 32, freq: 0.007, speed: 0.009, y: 0.72, opacity: 0.10, width: 1.4 },
+    { amp: 20, freq: 0.011, speed: 0.016, y: 0.88, opacity: 0.15, width: 1.0 },
+  ];
+
+  function resize(){
+    W = canvas.offsetWidth;
+    H = canvas.offsetHeight;
+    canvas.width = W;
+    canvas.height = H;
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    t += 1;
+
+    waves.forEach(wave => {
+      ctx.beginPath();
+      for(let x = 0; x <= W; x += 2){
+        const y = (wave.y * H) + Math.sin(x * wave.freq + t * wave.speed) * wave.amp;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(66,205,136,${wave.opacity})`;
+      ctx.lineWidth = wave.width;
+      ctx.stroke();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+</script>
+</body>
+</html>
